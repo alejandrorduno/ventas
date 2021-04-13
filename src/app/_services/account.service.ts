@@ -28,7 +28,6 @@ export class AccountService {
         return this.userSubject.value;
     }
     login(username, password,productor) {
-        console.log("Probando el Github")
         var URL=GlobalConstants.apiURL     
         return this.http.get<User>(`${URL}loginP.php?usuario=${username}&password=${password}&productor=${productor}`)
           .pipe(
