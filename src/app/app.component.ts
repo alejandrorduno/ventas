@@ -40,6 +40,7 @@ export class AppComponent{
         this.router.onSameUrlNavigation = 'reload';
         this.router.navigate([currentUrl]);
     }
+
   logout() {
     this.accountService.logout();
   }

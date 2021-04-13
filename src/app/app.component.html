@@ -1,23 +1,27 @@
 <nav class="navbar navbar-expand navbar-dark bg-dark" *ngIf="user">
-  <div class="navbar-nav">
+  <div class="navbar-nav" >
     <a class="text-white" mat-button  routerLink="/" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">INICIO</a>
-    <a mat-button [matMenuTriggerFor]="pedidoMenu" class="text-white" >Pedidos</a>
-    <mat-menu #pedidoMenu="matMenu" yPosition="above" >
-      <a mat-menu-item  [routerLink]="['/cappedidos']">Captura</a>
-    </mat-menu>
-    <a mat-button [matMenuTriggerFor]="ventasMenu" class="text-white">Ventas</a>
-    <mat-menu #ventasMenu="matMenu" yPosition="above" >
-      <!-- <a mat-menu-item (click)="llamarExportacion(1)" class="lineaNegra" >Exportación</a> -->
-      <a mat-menu-item  [routerLink]="['/capventasnacional']">Nacional</a>
-    </mat-menu>
-    <a mat-button [matMenuTriggerFor]="reporteMenu" class="text-white" >Reportes</a>
-    <mat-menu #reporteMenu="matMenu" yPosition="above" >
-      <a mat-menu-item (click) = "navegacion = 'repedoctacliente' " [routerLink]="['/repedoctacliente']" >Edo Cuenta Cliente</a>
-      <a mat-menu-item (click) = "navegacion = 'reprecuperacionsemanalnac' " [routerLink]="['/reprecuperacionsemanalnac']">Recuperación Semanal Nacional</a>
-      <a mat-menu-item (click) = "navegacion = 'repacumuladodeventas' " [routerLink]="['/repacumuladodeventas']">Acumulado de Ventas</a>
-      <a mat-menu-item (click) = "navegacion = 'repcobranza' " [routerLink]="['/repcobranza']">Cobranza Nacional</a>
+    <div *ngIf="empresas">
+
+      <a mat-button [matMenuTriggerFor]="pedidoMenu" class="text-white" >Pedidos</a>
+      <mat-menu #pedidoMenu="matMenu" yPosition="above" >
+        <a mat-menu-item  [routerLink]="['/cappedidos']">Captura</a>
       </mat-menu>
+      <a mat-button [matMenuTriggerFor]="ventasMenu" class="text-white">Ventas</a>
+      <mat-menu #ventasMenu="matMenu" yPosition="above" >
+        <!-- <a mat-menu-item (click)="llamarExportacion(1)" class="lineaNegra" >Exportación</a> -->
+        <a mat-menu-item  [routerLink]="['/capventasnacional']">Nacional</a>
+      </mat-menu>
+      <a mat-button [matMenuTriggerFor]="reporteMenu" class="text-white" >Reportes</a>
+      <mat-menu #reporteMenu="matMenu" yPosition="above" >
+        <a mat-menu-item (click) = "navegacion = 'repedoctacliente' " [routerLink]="['/repedoctacliente']" >Edo Cuenta Cliente</a>
+        <a mat-menu-item (click) = "navegacion = 'reprecuperacionsemanalnac' " [routerLink]="['/reprecuperacionsemanalnac']">Recuperación Semanal Nacional</a>
+        <a mat-menu-item (click) = "navegacion = 'repacumuladodeventas' " [routerLink]="['/repacumuladodeventas']">Acumulado de Ventas</a>
+        <a mat-menu-item (click) = "navegacion = 'repcobranza' " [routerLink]="['/repcobranza']">Cobranza Nacional</a>
+      </mat-menu>
+    </div>
   </div>
+
   <div class="navbar-nav ml-auto " >
     <a mat-button class="text-white "  [matMenuTriggerFor]="empresa">Empresa {{empresas}}</a>
     <mat-menu #empresa="matMenu">
