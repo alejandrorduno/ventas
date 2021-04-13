@@ -1,0 +1,51 @@
+<nav class="navbar navbar-expand navbar-dark bg-dark" *ngIf="user">
+  <div class="navbar-nav">
+    <a class="text-white" mat-button  routerLink="/" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">INICIO</a>
+    <a mat-button [matMenuTriggerFor]="pedidoMenu" class="text-white" >Pedidos</a>
+    <mat-menu #pedidoMenu="matMenu" yPosition="above" >
+      <a mat-menu-item  [routerLink]="['/cappedidos']">Captura</a>
+    </mat-menu>
+    <a mat-button [matMenuTriggerFor]="ventasMenu" class="text-white">Ventas</a>
+    <mat-menu #ventasMenu="matMenu" yPosition="above" >
+      <!-- <a mat-menu-item (click)="llamarExportacion(1)" class="lineaNegra" >Exportación</a> -->
+      <a mat-menu-item  [routerLink]="['/capventasnacional']">Nacional</a>
+    </mat-menu>
+    <a mat-button [matMenuTriggerFor]="reporteMenu" class="text-white" >Reportes</a>
+    <mat-menu #reporteMenu="matMenu" yPosition="above" >
+      <a mat-menu-item (click) = "navegacion = 'repedoctacliente' " [routerLink]="['/repedoctacliente']" >Edo Cuenta Cliente</a>
+      <a mat-menu-item (click) = "navegacion = 'reprecuperacionsemanalnac' " [routerLink]="['/reprecuperacionsemanalnac']">Recuperación Semanal Nacional</a>
+      <a mat-menu-item (click) = "navegacion = 'repacumuladodeventas' " [routerLink]="['/repacumuladodeventas']">Acumulado de Ventas</a>
+      <a mat-menu-item (click) = "navegacion = 'repcobranza' " [routerLink]="['/repcobranza']">Cobranza Nacional</a>
+      </mat-menu>
+  </div>
+  <div class="navbar-nav ml-auto " >
+    <a mat-button class="text-white "  [matMenuTriggerFor]="empresa">Empresa {{empresas}}</a>
+    <mat-menu #empresa="matMenu">
+      <a mat-menu-item (click)="buscarProductores('CHAPARRAL','01')">CHAPARRAL</a>
+      <a mat-menu-item (click)="buscarProductores('TOMBELL','02')">TOMBELL</a>
+    </mat-menu>
+    <button mat-mini-fab color="Basic" [matMenuTriggerFor]="cerrarSesion">
+      <mat-icon>person</mat-icon>
+    </button>
+    <mat-menu #cerrarSesion="matMenu" yPosition="above" >
+      <a mat-menu-item>{{user.firstName}}</a>
+      <a mat-menu-item (click)="logout()">Cerrar Sesión</a>
+    </mat-menu>
+  </div>
+
+  
+
+
+ <!-- <ul class="navbar-nav ml-auto">
+      <li class="nav-item pointer">
+          <a class="nav-link" (click)="logout()">SALIR</a>
+      </li>
+  </ul> -->
+</nav>
+
+
+
+<div class="app-container" >
+  <alert></alert>
+  <router-outlet></router-outlet>
+</div>
