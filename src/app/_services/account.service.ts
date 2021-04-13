@@ -29,7 +29,7 @@ export class AccountService {
     }
     login(username, password,productor) {
         var URL=GlobalConstants.apiURL     
-        return this.http.get<User>(`${URL}login.php?usuario=${username}&password=${password}&productor=${productor}`)
+        return this.http.get<User>(`${URL}loginP.php?usuario=${username}&password=${password}&productor=${productor}`)
           .pipe(
             map((user) => {
               // store user details and jwt token in local storage to keep user logged in between page refreshes
