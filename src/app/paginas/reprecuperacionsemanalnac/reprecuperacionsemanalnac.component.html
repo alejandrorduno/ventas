@@ -5,6 +5,15 @@
         <div class="card-body">
             <img src="assets/uno.gif" *ngIf="loading" alt="" style="padding-left: 29.5rem;padding-right: 29.5rem;">
             <div class="form-row" >
+                <!-- TEXTBOX PRODUCTOR -->
+                <mat-form-field class="mr-2">
+                <input matInput placeholder="Productor" [matAutocomplete]="productores" [formControl]="productorCtrl"  [(ngModel)]="datoscaptura.productor" name="productor"  required>
+                <mat-autocomplete #productores="matAutocomplete"  >
+                    <mat-option *ngFor="let productor of filteredEmployeeProd | async" [value]="productor.codigo+'-'+productor.nomcorto">
+                    <span>{{productor.nomcorto}} </span>
+                    </mat-option>
+                </mat-autocomplete>
+                </mat-form-field>
                 <mat-form-field class="mr-2">
                     <mat-label>Fecha</mat-label>
                     <input matInput type="date" id="txtfechaini" [ngModel]="datoscaptura.fechaini | date:'dd/MM/yyyy'" name="fechaini" required autofocus>
@@ -14,7 +23,7 @@
                     <input matInput type="date" id="txtfechafin" [ngModel]="datoscaptura.fechafin | date:'dd/MM/yyyy'" name="fechafin" required>
                   </mat-form-field>
                 <div class="form-group tamanodiv ml-5"> 
-                  <button mat-raised-button type="button" class="btn btn-success" (click)="pagoPorCliente()">Generar</button>
+                  <button mat-raised-button type="button" class="btn btn-success" (click)="recuperaSemanal()">Generar</button>
                </div>
             </div>
             <div id="pdf">
@@ -34,21 +43,14 @@
                         </tr>
                     </thead>
                     <tbody>
-                        <tr *ngFor="let cobranzaClientes of repCobranzaCh">
+                        <tr *ngFor="let cobranzaClientes of repCobranza">
                             <td>{{cobranzaClientes.Cliente}}</td>
-                            <td>{{cobranzaClientes.NomCliente}}</td>
-                            <td>{{cobranzaClientes.Importe | currency}}</td>
+                            <td [ngStyle]="{'font-weight':cobranzaClientes.NomCliente=='Total' ? 'bold' : ''}">{{cobranzaClientes.NomCliente}}</td>
+                            <td [ngStyle]="{'font-weight':cobranzaClientes.NomCliente=='Total' ? 'bold' : '','border-top':cobranzaClientes.NomCliente=='Total'?'2px solid black':''}">{{cobranzaClientes.Importe | currency}}</td>
                         </tr>
                     </tbody>
-                    <tfoot>
-                        <tr>
-                            <th></th>
-                            <th></th>
-                            <th>Total</th>
-                        </tr>
-                    </tfoot>
                 </table>
-                <table class="table table-sm" id="tTombell" [hidden]="!mostrarTablaTb">
+                <!-- <table class="table table-sm" id="tTombell" [hidden]="!mostrarTablaTb">
                     <thead>
                         <tr>
                             <th colspan="3">
@@ -72,7 +74,7 @@
                         <tr>
                             <th></th>
                             <th></th>
-                            <th>Total</th>
+                            <th>{{nTotal}}</th>
                         </tr>
                     </tfoot>
                 </table>
@@ -82,17 +84,17 @@
                       <tr style="padding: 0rem 1.2rem ; background-color: rgb(153 176 123); font-size: x-large;">
                         <th></th>
                         <th></th>
-                        <th>TOTAL</th>
+                        <th>{{nTotal}}</th>
                         <th></th>
                       </tr>
                     </tfoot>     
-                  </table>
+                  </table> -->
             </div>
            
         </div>
     </div>
 </div>
-<div *ngIf="mostrarTablaCh || mostrarTablaTb" class="form-group tamanodiv ml-5"> 
+<div *ngIf="mostrarTablaCh" class="form-group tamanodiv ml-5"> 
     <button mat-raised-button type="button" class="btn btn-danger" (click)="llamarPdf('pdf')" >Exportar PDF</button>
   </div>
     

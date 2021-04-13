@@ -3,6 +3,8 @@ import { ServiceService } from "../../_services/service.service";
 import { FormGroup, FormControl } from '@angular/forms';
 import {Observable} from 'rxjs';
 import {startWith, map} from 'rxjs/operators';
+import { DataSource } from '@angular/cdk/collections';
+import { variable } from '@angular/compiler/src/output/output_ast';
 declare var jQuery: any;
 
 @Component({
@@ -11,7 +13,7 @@ declare var jQuery: any;
   styleUrls: ['./repedoctacliente.component.css']
 })
 export class RepedoctaclienteComponent implements OnInit {
-    constructor(private servicesService: ServiceService) {   
+    constructor(private servicesService: ServiceService) {
   }
 
   ngOnInit(): void {
@@ -69,8 +71,8 @@ export class RepedoctaclienteComponent implements OnInit {
               this.mostrarTablaCh=true;
               this.productorCh=this.repEdoCtaCliente01[0]['NomProductor'];
               setTimeout(() => {
-                this.prueba('tblKardexValorizado');
-                this.prueba('tblKardexValorizado1'); 
+                this.sumaColumnaTotales('tblKardexValorizado');
+                this.sumaColumnaTotales('tblKardexValorizado1'); 
                 this.llamarproctombell(cliente);
                
               }, 500);
@@ -108,17 +110,17 @@ export class RepedoctaclienteComponent implements OnInit {
 
         if(this.repEdoCtaCliente02[0]["Vacio"]==""){
           this.repEdoCtaCliente02=null;
-          this.sumartotaldebe();
+          //this.sumartotaldebe();
         }else{
           this.mostrarTablaTb=true;
           this.productorTb=this.repEdoCtaCliente02[0]['NomProductor'];
   
           setTimeout(() => {
-            this.prueba('tblKardexValorizadotb');
-            this.prueba('tblKardexValorizadotb1'); 
+            this.sumaColumnaTotales('tblKardexValorizadotb');
+            this.sumaColumnaTotales('tblKardexValorizadotb1'); 
             //console.log("vasumar el total de debe ");
             
-            this.sumartotaldebe();
+            //this.sumartotaldebe();
           }, 500);
         }            
       });
@@ -198,7 +200,7 @@ export class RepedoctaclienteComponent implements OnInit {
         this.nAbonos = this.nAbonos + parseInt(d.Abonos);
         this.nAjuste = this.nAjuste + parseInt(d.Ajuste);
         this.nSaldo = this.nSaldo + parseInt(d.Saldo);
-        console.log(this.nSaldo);
+       // console.log(this.nSaldo);
         //  nSuma = nSuma + parseInt(eval(cCadena));
       }      
     }
@@ -275,17 +277,30 @@ export class RepedoctaclienteComponent implements OnInit {
         </html>`);  
       a.document.close(); 
   }   
-  
-  prueba(pid){
+
+  sumaPagados(pid){
+    
+    (function($){
+
+    })
+
+  }
+  nTotalDebe = 0;
+  sumaColumnaTotales(pid){
     var i;
     var bandera=0;
+    var jSumaTotalDebe =0 ;
     (function ($) {
-        for(i=4;i<=11;i++)
+      for(i=4;i<=11;i++)
         {
           var total=0;
           $('table#'+pid+' tbody td:nth-child(' + i + ')').each(function(index) 
           {
             var res =parseFloat($(this).text().replace(/[$,]/gi,'')) ;  
+
+            if(i==7 && (pid=='tblKardexValorizado' || pid == 'tblKardexValorizadotb')){
+              total += res;  
+            }
 
             if (i !== 6 && i !== 7) {
               total += res;  
@@ -298,12 +313,14 @@ export class RepedoctaclienteComponent implements OnInit {
             $('table#'+pid+' tfoot th:nth-child(' + i + ')').text("$"+ value);
           } 
 
-          if (pid == "tblKardexValorizado1" && i ==9){
-            $('table#tbltotaldeuda tfoot th:nth-child(3)').text("$"+ total);
+          if(i==7 && (pid=='tblKardexValorizado' || pid == 'tblKardexValorizadotb')){
+            var value = new Intl.NumberFormat().format(total);  // i.e. some decimal number
+            $('table#'+pid+' tfoot th:nth-child(' + i + ')').text("$"+ value);
           }
-          if (pid == "tblKardexValorizadotb1" && i ==9){
-            $('table#tbltotaldeuda tfoot th:nth-child(4)').text("$"+ total);
-          }          
+
+          if((pid == "tblKardexValorizado1" || pid == "tblKardexValorizadotb1") && (i ==10 || i == 11) ){
+            jSumaTotalDebe += total ;
+          }
         }
         //PARA MOSTRAR LAS TABLAS SI TIENEN DATOS Y OCULTAR CUANDO NO 
         if(bandera==0){
@@ -314,37 +331,11 @@ export class RepedoctaclienteComponent implements OnInit {
           $('#'+pid).show();
         }
     })(jQuery);
-      
-    return true;
-  }
 
-  // adeudoTot =0;
-  sumartotaldebe (){
-    //console.log("ya esta sumando");
-    
-    var i;
-    var total=0;
-    (function ($) {
-      if ($('#tbltotaldeuda').is(':hidden')) {
-        return false
-      } else {
-        for(i=3;i<=4;i++)
-        {
-          // tblKardexValorizado1
-          $('table#tbltotaldeuda tfoot th:nth-child(' + i + ')').each(function(index) 
-          { 
-            var res =parseFloat($(this).text().replace(/[$,]/gi,'')) ;  
-            total += res;  
-            console.log(total);
-            
-          });
-          var totalformateado = new Intl.NumberFormat().format(total);
-          $('table#tbltotaldeuda tfoot th:nth-child(11)').text("$"+ totalformateado);
-        }  
-        
-        // this.adeudoTot = total;
-      }   
-    })(jQuery);
+    if(pid == "tblKardexValorizado1" || pid == "tblKardexValorizadotb1"){
+      this.nTotalDebe+= jSumaTotalDebe;  
+    }
+    return true;
   }
 }
 

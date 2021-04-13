@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ServiceService } from "../../_services/service.service";
 import { FormGroup, FormControl } from '@angular/forms';
-import {observable, Observable} from 'rxjs';
+import { Observable} from 'rxjs';
 import {startWith, map} from 'rxjs/operators';
 declare var jQuery: any;
 import {

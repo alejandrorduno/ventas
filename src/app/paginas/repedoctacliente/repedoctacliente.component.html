@@ -42,7 +42,7 @@
                   <h3 style="padding: 0rem 1.2rem ; color: white; background-color: rgb(75 117 32);">Manifiestos Pagados</h3> 
               </th>
             </tr>
-            <tr>
+            <tr> 
               <th>Manifiesto</th>
               <th>Fecha Manifiesto </th>
               <th>Factura</th>
@@ -51,7 +51,7 @@
               <th>Fecha de Pago</th>
               <th>Abonos</th>
               <th>Ajustes</th>  
-              <th>Adeudo Manifiesto</th>    
+              <!-- <th>Adeudo Manifiesto</th>      -->
             </tr>
           </thead>
           <tbody>
@@ -64,7 +64,7 @@
               <td *ngIf="datosEdoCtaCliente.Pagado=='1'"> {{datosEdoCtaCliente.FechaPago}}</td>
               <td *ngIf="datosEdoCtaCliente.Pagado=='1'"> {{datosEdoCtaCliente.Abonos | currency}}</td>
               <td *ngIf="datosEdoCtaCliente.Pagado=='1'"> {{datosEdoCtaCliente.Ajuste | currency}}</td>
-              <td *ngIf="datosEdoCtaCliente.Pagado=='1'"> {{datosEdoCtaCliente.Saldo | currency}}</td>
+              <!-- <td *ngIf="datosEdoCtaCliente.Pagado=='1'"> {{datosEdoCtaCliente.Saldo | currency}}</td> -->
             </tr>
           </tbody> 
           
@@ -78,7 +78,7 @@
                 <th ></th>
                 <th>Total </th>
                 <th>Total </th>
-                <th>Total </th>
+                <!-- <th>Total </th> -->
             </tr>
           </tfoot>
         </table> 
@@ -154,7 +154,7 @@
                 <th rowspan="2">Fecha de Pago</th>
                 <th>Abonos</th>
                 <th>Ajustes</th>  
-                <th>Adeudo Manifiesto</th>    
+                <!-- <th>Adeudo Manifiesto</th>     -->
               </tr>
             </thead>
             <tbody>
@@ -167,7 +167,7 @@
                   <td *ngIf="datosEdoCtaCliente.Pagado=='1'"> {{datosEdoCtaCliente.FechaPago}}</td>
                   <td *ngIf="datosEdoCtaCliente.Pagado=='1'"> {{datosEdoCtaCliente.Abonos | currency}}</td>
                   <td *ngIf="datosEdoCtaCliente.Pagado=='1'"> {{datosEdoCtaCliente.Ajuste | currency}}</td>
-                  <td *ngIf="datosEdoCtaCliente.Pagado=='1'"> {{datosEdoCtaCliente.Saldo | currency}}</td>
+                  <!-- <td *ngIf="datosEdoCtaCliente.Pagado=='1'"> {{datosEdoCtaCliente.Saldo | currency}}</td> -->
               </tr>
             </tbody>
             <tfoot>
@@ -180,7 +180,7 @@
                   <th ></th>
                   <th>Total </th>
                   <th>Total </th>
-                  <th>Total </th>
+                  <!-- <th>Total </th> -->
               </tr>
             </tfoot>
           </table> 
@@ -250,7 +250,7 @@
                 <th></th>
                 <th></th>
                 <th>ADEUDO TOTAL</th>
-                <th></th>
+                <th>{{nTotalDebe | currency}}</th>
               </tr>
             </tfoot>     
           </table>
